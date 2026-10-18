@@ -8,67 +8,93 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f5f7fb} header{background:#0d47a1;color:white;padding:12px 16px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:20}
-.card{background:white;margin:12px;padding:16px;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
-.btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:bold;margin:6px 0;cursor:pointer}
-.btn-blue{background:#0d47a1;color:white} .btn-green{background:#2e7d32;color:white} .btn-yellow{background:#f9a825;color:black}
-.hidden{display:none} input,select,textarea{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ccc}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-.badge{padding:4px 8px;border-radius:8px;font-size:12px;color:white} .badge-new{background:#c62828} .badge-done{background:#2e7d32}
-.topAlert{background:#c62828;color:white;padding:10px;text-align:center;font-weight:bold}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background: linear-gradient(270deg,#0d47a1,#1976d2,#26a69a,#0d47a1);background-size:600% 600%;animation:gradientBG 12s ease infinite;min-height:100vh}
+@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(249,168,37,0.7)}70%{transform:scale(1.05);box-shadow:0 0 0 12px rgba(249,168,37,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(249,168,37,0)}}
+@keyframes bounceIn{0%{transform:scale(0.8)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+header{background:rgba(13,71,161,0.9);backdrop-filter:blur(10px);color:white;padding:14px 18px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:20;animation:slideUp 0.6s ease}
+.card{background:rgba(255,255,255,0.95);margin:14px;padding:18px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,0.15);animation:fadeIn 0.6s ease;transition:all 0.3s ease}
+.card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 15px 35px rgba(0,0,0,0.25)}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:bold;margin:7px 0;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.btn::after{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,0.3);border-radius:50%;transform:translate(-50%,-50%);transition:width 0.6s,height 0.6s}
+.btn:active::after{width:300px;height:300px}
+.btn-blue{background:linear-gradient(135deg,#0d47a1,#1976d2);color:white}
+.btn-green{background:linear-gradient(135deg,#2e7d32,#66bb6a);color:white}
+.btn-yellow{background:linear-gradient(135deg,#f9a825,#ffca28);color:#111;animation:pulse 2s infinite}
+.btn:hover{transform:scale(1.03)}
+.hidden{display:none} input,select,textarea{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:1px solid #ddd;transition:0.3s}
+input:focus,textarea:focus{border-color:#0d47a1;box-shadow:0 0 0 3px rgba(13,71,161,0.15);outline:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.badge{padding:5px 10px;border-radius:10px;font-size:12px;color:white}
+.badge-new{background:#c62828;animation:pulse 1.5s infinite} .badge-done{background:#2e7d32}
+.topAlert{background:linear-gradient(90deg,#c62828,#ef5350);color:white;padding:12px;text-align:center;font-weight:bold;animation:slideUp 0.5s ease}
+.hero-icon{font-size:48px;animation:float 3s ease-in-out infinite;display:inline-block}
+.service-emoji{font-size:36px;animation:float 3s ease-in-out infinite;display:block;margin-bottom:8px}
+#loginChoice{animation:bounceIn 0.8s ease}
+.loading{position:fixed;inset:0;background:#0d47a1;display:flex;align-items:center;justify-content:center;color:white;font-size:28px;z-index:100;animation:fadeIn 0.5s}
 </style>
 </head>
 <body>
-<header><h3>⚡ MATARI ELECTRICAL CO.</h3><span>0673092321</span></header>
 
-<div id="loginChoice" class="card" style="margin-top:30px;text-align:center">
-<h2>Karibu Matari Electrical Co.</h2><p>Umeme na Bomba - Mbezi Dar</p>
-<button class="btn btn-blue" onclick="show('mtejaLogin')">👤 INGIA MTEJA</button>
-<button class="btn" style="background:#111;color:white" onclick="show('fundiLogin')">🔧 INGIA MHUDUMU</button>
+<div id="loader" class="loading">⚡ MATARI CO... Loading</div>
+
+<header><h3>⚡ MATARI ELECTRICAL CO.</h3><span style="background:rgba(255,255,255,0.2);padding:6px 12px;border-radius:20px">0673092321</span></header>
+
+<div id="loginChoice" class="card" style="margin-top:40px;text-align:center">
+<div class="hero-icon">⚡</div>
+<h2 style="margin:10px 0">Karibu Matari Electrical Co.</h2><p style="color:#555;margin-bottom:16px">Umeme na Bomba - Mbezi Dar - Huduma ya haraka</p>
+<button class="btn btn-blue" onclick="showWithAnim('mtejaLogin')">👤 INGIA MTEJA</button>
+<button class="btn" style="background:#111;color:white" onclick="showWithAnim('fundiLogin')">🔧 INGIA MHUDUMU</button>
+<p style="margin-top:14px;font-size:13px;color:#777">📷 Kamera 30k | ❄️ AC 70k | 🔌 Wiring 20k</p>
 </div>
 
-<div id="mtejaLogin" class="card hidden"><h3>Ingiza Taarifa Zako</h3><input id="mtejaJina" placeholder="Jina lako kamili"><input id="mtejaSimu" placeholder="Namba ya simu 071..."><button class="btn btn-blue" onclick="ingiaMteja()">ENDELEA</button><button class="btn" onclick="show('loginChoice')">RUDI</button></div>
+<div id="mtejaLogin" class="card hidden"><h3>✨ Ingiza Taarifa Zako</h3><input id="mtejaJina" placeholder="Jina lako kamili"><input id="mtejaSimu" placeholder="Namba ya simu 071..."><button class="btn btn-blue" onclick="ingiaMteja()">ENDELEA 🚀</button><button class="btn" onclick="showWithAnim('loginChoice')">RUDI</button></div>
 
 <div id="mtejaHuduma" class="hidden">
-<div class="card"><h3>Habari, <span id="mtejaJinaShow"></span>!</h3></div>
+<div class="card" style="text-align:center"><h3>Habari, <span id="mtejaJinaShow" style="color:#0d47a1"></span>! 👋 Chagua huduma unayohitaji</h3></div>
 <div class="grid">
-<div class="card"><h3>🔌 Electrical Installation</h3><p>Wiring, LUKU, Socket</p><b>Kuanzia 20k</b><button class="btn btn-yellow" onclick="chaguaHuduma('Electrical Installation','20000')">NAHITAJI HUDUMA</button></div>
-<div class="card" style="border:2px solid #f9a825"><h3>📷 Kufunga Kamera</h3><p>CCTV - Ulinzi</p><b>30k kwa kamera moja</b><button class="btn btn-yellow" onclick="chaguaHuduma('Kufunga Kamera - 30k','30000')">NAHITAJI HUDUMA</button></div>
-<div class="card" style="border:2px solid #0d47a1"><h3>❄️ AC - 70k</h3><p>LG, Samsung - Kufunga & Gesi</p><b>70k kwa AC moja</b><button class="btn btn-yellow" onclick="chaguaHuduma('AC - 70k','70000')">NAHITAJI HUDUMA</button></div>
-<div class="card"><h3>🚿 Plumbing</h3><p>Bomba, Pump, Choo</p><b>Kuanzia 15k</b><button class="btn btn-yellow" onclick="chaguaHuduma('Plumbing','15000')">NAHITAJI HUDUMA</button></div>
+<div class="card"><span class="service-emoji">🔌</span><h3>Electrical Installation</h3><p>Wiring, LUKU, Socket</p><b>Kuanzia 20k</b><button class="btn btn-yellow" onclick="chaguaHuduma('Electrical Installation','20000')">NAHITAJI HUDUMA ⚡</button></div>
+<div class="card" style="border:2px solid #f9a825"><span class="service-emoji">📷</span><h3>Kufunga Kamera</h3><p>CCTV - Ulinzi wa nyumba</p><b style="color:#ef6c00;font-size:18px">30k kwa kamera moja</b><button class="btn btn-yellow" onclick="chaguaHuduma('Kufunga Kamera - 30k','30000')">NAHITAJI HUDUMA 📷</button></div>
+<div class="card" style="border:2px solid #0d47a1"><span class="service-emoji">❄️</span><h3>AC - 70k</h3><p>LG, Samsung - Kufunga & Gesi</p><b style="color:#0d47a1;font-size:18px">70k kwa AC moja</b><button class="btn btn-yellow" onclick="chaguaHuduma('AC - 70k','70000')">NAHITAJI HUDUMA ❄️</button></div>
+<div class="card"><span class="service-emoji">🚿</span><h3>Plumbing</h3><p>Bomba, Pump, Choo, Sink</p><b>Kuanzia 15k</b><button class="btn btn-yellow" onclick="chaguaHuduma('Plumbing','15000')">NAHITAJI HUDUMA 🚿</button></div>
 </div>
 </div>
 
-<div id="mtejaMahali" class="card hidden"><h3>Jaza Mahali Ulipo</h3><p>Huduma: <b id="hudumaChaguliwaShow"></b></p><input id="mkoa" placeholder="Mkoa - Dar"><input id="wilaya" placeholder="Wilaya - Kinondoni"><input id="kata" placeholder="Kata - Mbezi"><input id="mtaa" placeholder="Mtaa"><textarea id="maelezo" placeholder="Maelezo"></textarea><p><b>Jumla: <span id="jumlaBei">0</span> TZS</b></p><button class="btn btn-green" onclick="submitOda()">SUBMIT ODA</button></div>
+<div id="mtejaMahali" class="card hidden"><h3>📍 Jaza Mahali Ulipo</h3><p>Huduma: <b id="hudumaChaguliwaShow" style="color:#0d47a1"></b></p><input id="mkoa" placeholder="Mkoa - Dar"><input id="wilaya" placeholder="Wilaya - Kinondoni"><input id="kata" placeholder="Kata - Mbezi"><input id="mtaa" placeholder="Mtaa - Mbezi Mwisho"><textarea id="maelezo" placeholder="Maelezo ya tatizo"></textarea><p style="background:#fff8e1;padding:10px;border-radius:10px"><b>Jumla: <span id="jumlaBei">0</span> TZS</b> 💰</p><button class="btn btn-green" onclick="submitOda()">SUBMIT ODA ✅</button></div>
 
-<div id="mtejaAsante" class="card hidden" style="text-align:center"><h2>✅ Asante!</h2><p>Oda imepokelewa. Tutakupigia.</p><p>WhatsApp Admin: <b id="whatsappShow"></b></p><button class="btn btn-blue" onclick="location.reload()">RUDI</button></div>
+<div id="mtejaAsante" class="card hidden" style="text-align:center"><div style="font-size:60px;animation:bounceIn 0.8s">✅</div><h2>Asante Sana!</h2><p>Oda imepokelewa. Fundi anakupigia haraka.</p><p>WhatsApp: <b id="whatsappShow"></b></p><button class="btn btn-blue" onclick="location.reload()">RUDI MWANZO</button></div>
 
-<div id="fundiLogin" class="card hidden"><h3>Ingia Mhudumu</h3><input type="password" id="passMhudumu" placeholder="Password adamu"><button class="btn btn-blue" onclick="loginMhudumu()">INGIA</button><button class="btn" onclick="show('loginChoice')">RUDI</button><p id="loginError" style="color:red"></p></div>
+<div id="fundiLogin" class="card hidden"><h3>🔐 Ingia Mhudumu</h3><input type="password" id="passMhudumu" placeholder="Password adamu •••"><button class="btn btn-blue" onclick="loginMhudumu()">INGIA 🚀</button><button class="btn" onclick="showWithAnim('loginChoice')">RUDI</button><p id="loginError" style="color:red"></p></div>
 
 <div id="mhudumuPage" class="hidden">
 <div id="alertBar" class="topAlert hidden"></div>
-<div class="card"><h2>Dashboard - Abdukadiri</h2><p>Oda: <span id="totalOda">0</span> | Mpya: <span id="odaNew">0</span> | Mapato: <span id="totalMapato">0</span></p><button class="btn btn-blue" onclick="pakuaRipoti()">📥 PAKUA RIPOTI PDF</button></div>
-<div class="card"><h3>📊 Graph</h3><div class="grid"><div><canvas id="chartWateja"></canvas></div><div><canvas id="chartHuduma"></canvas></div></div></div>
-<div class="card"><h3>Oda Zote</h3><div id="orodhaOda"></div></div>
-<div class="card"><h3>⚙️ Settings</h3><input id="setWhatsapp" placeholder="WhatsApp 071377454"><input id="setLipa" placeholder="Malipo 0673092321"><input type="password" id="setPassOld" placeholder="Password zamani"><input type="password" id="setPassNew" placeholder="Password mpya"><button class="btn btn-green" onclick="saveSettings()">HIFADHI</button></div>
-<button class="btn" onclick="show('loginChoice')">TOKA</button>
+<div class="card"><h2>📊 Dashboard - Abdukadiri</h2><p>Oda: <span id="totalOda">0</span> | Mpya: <span id="odaNew">0</span> | Mapato: <span id="totalMapato">0</span> TZS</p><button class="btn btn-blue" onclick="pakuaRipoti()">📥 PAKUA RIPOTI PDF</button></div>
+<div class="card"><h3>📈 Graph za Biashara</h3><div class="grid"><div><canvas id="chartWateja"></canvas></div><div><canvas id="chartHuduma"></canvas></div></div></div>
+<div class="card"><h3>📋 Oda Zote za Wateja</h3><div id="orodhaOda"></div></div>
+<div class="card"><h3>⚙️ Settings - Profile ya Kampuni</h3><input id="setWhatsapp" placeholder="WhatsApp 071377454"><input id="setLipa" placeholder="Malipo 0673092321"><input type="password" id="setPassOld" placeholder="Password zamani"><input type="password" id="setPassNew" placeholder="Password mpya"><button class="btn btn-green" onclick="saveSettings()">HIFADHI 💾</button></div>
+<button class="btn" onclick="showWithAnim('loginChoice')">TOKA</button>
 </div>
 
 <script>
+setTimeout(()=>{document.getElementById('loader').style.display='none'},1200);
 let orders=JSON.parse(localStorage.getItem('matari_orders')||'[]');
 let settings=JSON.parse(localStorage.getItem('matari_settings')||'{"whatsapp":"071377454","lipa":"0673092321","pass":"adamu"}');
 let currentMteja={},currentHuduma='',currentBei=0;
-function show(id){document.querySelectorAll('[id$="Login"],[id$="Choice"],[id$="Huduma"],[id$="Mahali"],[id$="Asante"],[id$="Page"]').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');if(id==='mhudumuPage')loadAdmin();}
-function ingiaMteja(){let j=document.getElementById('mtejaJina').value,s=document.getElementById('mtejaSimu').value;if(!j||!s){alert('Jaza jina na simu');return;}currentMteja={jina:j,simu:s};document.getElementById('mtejaJinaShow').innerText=j;show('mtejaHuduma');}
-function chaguaHuduma(h,b){currentHuduma=h;currentBei=parseInt(b);document.getElementById('hudumaChaguliwaShow').innerText=h;document.getElementById('jumlaBei').innerText=b;show('mtejaMahali');}
-function submitOda(){let m=document.getElementById('mkoa').value,w=document.getElementById('wilaya').value,k=document.getElementById('kata').value,mt=document.getElementById('mtaa').value;if(!m||!w||!k||!mt){alert('Jaza mkoa wilaya kata mtaa');return;}let oda={id:Date.now(),jina:currentMteja.jina,simu:currentMteja.simu,huduma:currentHuduma,bei:currentBei,mkoa:m,wilaya:w,kata:k,mtaa:mt,maelezo:document.getElementById('maelezo').value,tarehe:new Date().toLocaleString(),status:'new'};orders.push(oda);localStorage.setItem('matari_orders',JSON.stringify(orders));document.getElementById('whatsappShow').innerText=settings.whatsapp;let msg=`ODA MPYA MATARI%0AJina:${oda.jina}%0ASimu:${oda.simu}%0AHuduma:${oda.huduma} ${oda.bei}TZS%0AMahali:${m},${w},${k},${mt}%0ATarehe:${oda.tarehe}`;window.open(`https://wa.me/255${settings.whatsapp.substring(1)}?text=${msg}`,'_blank');show('mtejaAsante');}
-function loginMhudumu(){let p=document.getElementById('passMhudumu').value;if(p===settings.pass){show('mhudumuPage');}else{document.getElementById('loginError').innerText='Si sahihi, ni adamu';}}
-function loadAdmin(){document.getElementById('totalOda').innerText=orders.length;let ne=orders.filter(o=>o.status==='new').length;document.getElementById('odaNew').innerText=ne;document.getElementById('totalMapato').innerText=orders.reduce((s,o)=>s+o.bei,0);if(ne>0){document.getElementById('alertBar').classList.remove('hidden');document.getElementById('alertBar').innerText=`🚨 Oda ${ne} Mpya!`;}document.getElementById('setWhatsapp').value=settings.whatsapp;document.getElementById('setLipa').value=settings.lipa;let html='';orders.slice().reverse().forEach(o=>{html+=`<div class='card' style='border-left:5px solid ${o.status==='new'?'#c62828':'#2e7d32'}'><b>${o.jina}</b> - ${o.simu} <span class='badge ${o.status==='new'?'badge-new':'badge-done'}'>${o.status}</span><br>${o.huduma} - ${o.bei} TZS<br>${o.mkoa},${o.wilaya},${o.kata},${o.mtaa}<br>${o.tarehe}<br><button class='btn btn-green' onclick='markDone(${o.id})'>Imefanyika</button> <a href='https://wa.me/255${o.simu.substring(1)}' target='_blank'><button class='btn btn-blue'>WhatsApp</button></a></div>`;});document.getElementById('orodhaOda').innerHTML=html||'Hakuna oda';drawCharts();}
+function showWithAnim(id){const el=document.getElementById(id);document.querySelectorAll('[id$="Login"],[id$="Choice"],[id$="Huduma"],[id$="Mahali"],[id$="Asante"],[id$="Page"]').forEach(e=>e.classList.add('hidden'));el.classList.remove('hidden');el.style.animation='none';el.offsetHeight;el.style.animation='fadeIn 0.5s ease';if(id==='mhudumuPage')loadAdmin();}
+function show(id){showWithAnim(id);}
+function ingiaMteja(){let j=document.getElementById('mtejaJina').value,s=document.getElementById('mtejaSimu').value;if(!j||!s){alert('Jaza jina na simu');return;}currentMteja={jina:j,simu:s};document.getElementById('mtejaJinaShow').innerText=j;showWithAnim('mtejaHuduma');}
+function chaguaHuduma(h,b){currentHuduma=h;currentBei=parseInt(b);document.getElementById('hudumaChaguliwaShow').innerText=h;document.getElementById('jumlaBei').innerText=b;if(navigator.vibrate)navigator.vibrate(50);showWithAnim('mtejaMahali');}
+function submitOda(){let m=document.getElementById('mkoa').value,w=document.getElementById('wilaya').value,k=document.getElementById('kata').value,mt=document.getElementById('mtaa').value;if(!m||!w||!k||!mt){alert('Jaza mkoa wilaya kata mtaa');return;}let oda={id:Date.now(),jina:currentMteja.jina,simu:currentMteja.simu,huduma:currentHuduma,bei:currentBei,mkoa:m,wilaya:w,kata:k,mtaa:mt,maelezo:document.getElementById('maelezo').value,tarehe:new Date().toLocaleString(),status:'new'};orders.push(oda);localStorage.setItem('matari_orders',JSON.stringify(orders));document.getElementById('whatsappShow').innerText=settings.whatsapp;let msg=`ODA MPYA MATARI%0AJina:${oda.jina}%0ASimu:${oda.simu}%0AHuduma:${oda.huduma} ${oda.bei}TZS%0AMahali:${m},${w},${k},${mt}%0ATarehe:${oda.tarehe}`;window.open(`https://wa.me/255${settings.whatsapp.substring(1)}?text=${msg}`,'_blank');showWithAnim('mtejaAsante');}
+function loginMhudumu(){let p=document.getElementById('passMhudumu').value;if(p===settings.pass){showWithAnim('mhudumuPage');}else{document.getElementById('loginError').innerText='Si sahihi, ni adamu';}}
+function loadAdmin(){document.getElementById('totalOda').innerText=orders.length;let ne=orders.filter(o=>o.status==='new').length;document.getElementById('odaNew').innerText=ne;document.getElementById('totalMapato').innerText=orders.reduce((s,o)=>s+o.bei,0);if(ne>0){document.getElementById('alertBar').classList.remove('hidden');document.getElementById('alertBar').innerText=`🚨 Oda ${ne} Mpya Hazijafanyiwa Kazi!`;}document.getElementById('setWhatsapp').value=settings.whatsapp;document.getElementById('setLipa').value=settings.lipa;let html='';orders.slice().reverse().forEach(o=>{html+=`<div class='card' style='border-left:5px solid ${o.status==='new'?'#c62828':'#2e7d32'}'><b>${o.jina}</b> - ${o.simu} <span class='badge ${o.status==='new'?'badge-new':'badge-done'}'>${o.status}</span><br>${o.huduma} - ${o.bei} TZS<br>${o.mkoa},${o.wilaya},${o.kata},${o.mtaa}<br>${o.tarehe}<br><button class='btn btn-green' onclick='markDone(${o.id})'>Imefanyika ✅</button> <a href='https://wa.me/255${o.simu.substring(1)}' target='_blank'><button class='btn btn-blue'>WhatsApp 💬</button></a></div>`;});document.getElementById('orodhaOda').innerHTML=html||'Hakuna oda';drawCharts();}
 function markDone(id){orders=orders.map(o=>o.id===id?{...o,status:'done'}:o);localStorage.setItem('matari_orders',JSON.stringify(orders));loadAdmin();}
-function drawCharts(){let ctx1=document.getElementById('chartWateja').getContext('2d');let labels=orders.map((_,i)=>`Oda ${i+1}`);let data=orders.map((_,i)=>i+1);if(window.chart1)window.chart1.destroy();window.chart1=new Chart(ctx1,{type:'line',data:{labels,datasets:[{label:'Ongezeko Wateja',data,borderColor:'#0d47a1',backgroundColor:'rgba(13,71,161,0.2)',fill:true}]}});let ctx2=document.getElementById('chartHuduma').getContext('2d');let counts={};orders.forEach(o=>{counts[o.huduma]=(counts[o.huduma]||0)+1});if(window.chart2)window.chart2.destroy();window.chart2=new Chart(ctx2,{type:'bar',data:{labels:Object.keys(counts),datasets:[{label:'Huduma Maarufu',data:Object.values(counts),backgroundColor:['#0d47a1','#f9a825','#2e7d32','#c62828']}]}});}
+function drawCharts(){let ctx1=document.getElementById('chartWateja').getContext('2d');let labels=orders.map((_,i)=>`Oda ${i+1}`);let data=orders.map((_,i)=>i+1);if(window.chart1)window.chart1.destroy();window.chart1=new Chart(ctx1,{type:'line',data:{labels,datasets:[{label:'Ongezeko Wateja',data,borderColor:'#0d47a1',backgroundColor:'rgba(13,71,161,0.2)',fill:true,tension:0.4}]},options:{animation:{duration:1500}}});let ctx2=document.getElementById('chartHuduma').getContext('2d');let counts={};orders.forEach(o=>{counts[o.huduma]=(counts[o.huduma]||0)+1});if(window.chart2)window.chart2.destroy();window.chart2=new Chart(ctx2,{type:'doughnut',data:{labels:Object.keys(counts),datasets:[{data:Object.values(counts),backgroundColor:['#0d47a1','#f9a825','#2e7d32','#c62828','#26a69a']}]},options:{animation:{animateRotate:true,duration:2000}}});}
 function pakuaRipoti(){const{jsPDF}=window.jspdf;let doc=new jsPDF();doc.text("Matari Electrical Co. - Ripoti",10,10);doc.text(`WhatsApp ${settings.whatsapp} - Malipo ${settings.lipa}`,10,20);let y=30;orders.forEach((o,i)=>{doc.text(`${i+1}. ${o.jina} | ${o.simu} | ${o.huduma} ${o.bei} | ${o.mkoa} ${o.wilaya} | ${o.tarehe}`,10,y);y+=8;if(y>280){doc.addPage();y=10;}});doc.save(`Matari_Ripoti_${new Date().toLocaleDateString()}.pdf`);}
-function saveSettings(){let w=document.getElementById('setWhatsapp').value,l=document.getElementById('setLipa').value,oldP=document.getElementById('setPassOld').value,newP=document.getElementById('setPassNew').value;if(oldP&&oldP!==settings.pass){alert('Password zamani si sahihi');return;}if(w)settings.whatsapp=w;if(l)settings.lipa=l;if(newP)settings.pass=newP;localStorage.setItem('matari_settings',JSON.stringify(settings));alert('Imehifadhiwa!');}
+function saveSettings(){let w=document.getElementById('setWhatsapp').value,l=document.getElementById('setLipa').value,oldP=document.getElementById('setPassOld').value,newP=document.getElementById('setPassNew').value;if(oldP&&oldP!==settings.pass){alert('Password zamani si sahihi');return;}if(w)settings.whatsapp=w;if(l)settings.lipa=l;if(newP)settings.pass=newP;localStorage.setItem('matari_settings',JSON.stringify(settings));alert('✅ Imehifadhiwa!');}
 </script>
 </body>
 </html>
