@@ -3,95 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matari Electrical Co. - Umeme, Bomba, Solar | Mbezi Dar</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+<title>Matari Electrical Co. - Na Vikatuni</title>
+<link rel="icon" href="data:image/svg+xml,[STRIPPED]">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
 body{background:#f0f4f8;overflow-x:hidden}
-@keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(198,40,40,0.7)}70%{box-shadow:0 0 0 15px rgba(198,40,40,0)}100%{box-shadow:0 0 0 0 rgba(198,40,40,0)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.hero{background:linear-gradient(135deg,#0d47a1 0%,#1976d2 50%,#00acc1 100%);color:white;padding:60px 20px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'⚡🔌🚿☀️📷';position:absolute;font-size:120px;opacity:0.1;top:-20px;left:-20px;animation:float 6s infinite}
-.navbar{background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 15px rgba(0,0,0,0.1)}
+@keyframes bounceIn{0%{transform:scale(0.5)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes talk{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.hero{background:linear-gradient(135deg,#0d47a1,#1976d2,#00acc1);color:white;padding:50px 20px;text-align:center}
+.navbar{background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);padding:12px 20px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 2px 15px rgba(0,0,0,0.1)}
 .card{background:white;margin:12px;padding:20px;border-radius:20px;box-shadow:0 6px 20px rgba(0,0,0,0.08);animation:fadeIn 0.6s ease;transition:0.3s}
-.card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,0.15)}
-.btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:bold;margin:7px 0;cursor:pointer;transition:0.3s}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:bold;margin:7px 0;cursor:pointer}
 .btn-blue{background:linear-gradient(135deg,#0d47a1,#1976d2);color:white}
 .btn-green{background:linear-gradient(135deg,#2e7d32,#43a047);color:white}
 .btn-yellow{background:linear-gradient(135deg,#f9a825,#ffb300);color:#111}
-.btn-red{background:linear-gradient(135deg,#c62828,#e53935);color:white;animation:pulse 2s infinite}
+.btn-red{background:#c62828;color:white}
 .btn-dark{background:#111;color:white}
 .hidden{display:none}
-input,select,textarea{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:1px solid #ddd}
+input,textarea{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:1px solid #ddd}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
 .badge{padding:6px 12px;border-radius:20px;font-size:12px;color:white;font-weight:bold}
 .badge-new{background:#c62828;animation:shake 0.5s infinite} .badge-done{background:#2e7d32}
-.topAlert{background:linear-gradient(90deg,#c62828,#ff5252);color:white;padding:14px;text-align:center;font-weight:bold;position:sticky;top:60px;z-index:40;animation:shake 0.8s ease}
-.price-tag{background:#e3f2fd;color:#0d47a1;padding:6px 12px;border-radius:20px;font-weight:bold;display:inline-block;margin:6px 0}
+.topAlert{background:linear-gradient(90deg,#c62828,#ff5252);color:white;padding:14px;text-align:center;font-weight:bold;position:sticky;top:60px;z-index:40}
+.price-tag{padding:6px 12px;border-radius:20px;font-weight:bold;display:inline-block;margin:6px 0;font-size:13px}
 .price-fixed{background:#fff3e0;color:#ef6c00;border:2px solid #f9a825}
 .price-makubaliano{background:#e8f5e9;color:#2e7d32;border:1px dashed #2e7d32}
 .service-icon{font-size:42px;display:block;margin-bottom:8px;animation:float 3s infinite}
 .loading{position:fixed;inset:0;background:#0d47a1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;font-size:26px;z-index:100}
+/* VIKATUNI */
+.mascot-mteja{position:fixed;bottom:20px;right:16px;z-index:60;display:flex;align-items:flex-end;gap:8px;animation:fadeIn 0.8s}
+.mascot-avatar{width:70px;height:70px;background:linear-gradient(135deg,#f9a825,#ffca28);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 6px 20px rgba(0,0,0,0.3);animation:float 3s infinite;cursor:pointer;border:3px solid white}
+.mascot-bubble{background:white;padding:12px 14px;border-radius:18px 18px 0 18px;box-shadow:0 6px 20px rgba(0,0,0,0.2);max-width:220px;font-size:13px;line-height:1.4;position:relative;animation:talk 1s infinite}
+.mascot-bubble::after{content:'';position:absolute;bottom:-6px;right:20px;width:12px;height:12px;background:white;transform:rotate(45deg)}
+.mascot-mhudumu-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:90;display:flex;align-items:center;justify-content:center;padding:16px}
+.mascot-mhudumu-box{background:white;border-radius:24px;padding:24px;max-width:380px;width:100%;text-align:center;animation:bounceIn 0.6s;box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.mascot-mhudumu-avatar{width:100px;height:100px;background:linear-gradient(135deg,#0d47a1,#1976d2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:60px;margin:0 auto 12px;animation:talk 0.6s infinite;border:4px solid #f9a825}
 </style>
 </head>
 <body>
 
-<div id="loader" class="loading"><div style="font-size:60px;animation:float 2s infinite">⚡</div><div>MATARI ELECTRICAL CO.</div><small style="font-size:14px;opacity:0.8">Mbezi Dar - Inapakia...</small></div>
+<div id="loader" class="loading"><div style="font-size:60px;animation:float 2s infinite">⚡</div><div>MATARI CO. NA VIKATUNI...</div></div>
 
-<div class="navbar">
-<b>⚡ MATARI CO.</b>
-<div style="display:flex;gap:8px"><span style="background:#e3f2fd;padding:6px 10px;border-radius:20px;font-size:12px">📷 30k</span><span style="background:#e3f2fd;padding:6px 10px;border-radius:20px;font-size:12px">❄️ 70k</span></div>
+<div class="navbar"><b>⚡ MATARI CO.</b><span style="font-size:12px">📷 30k | ❄️ 70k | Vingine Makubaliano</span></div>
+<div class="hero"><h1>Fundi Umeme & Bomba Mbezi</h1><p>Kamera 30k & AC 70k Bei Kamili | Vingine Makubaliano | Solar | Emergency</p></div>
+
+<!-- KATUNI WA MTEJA - FUNDI KITO -->
+<div id="mascotMteja" class="mascot-mteja hidden">
+<div class="mascot-bubble" id="bubbleMteja">Karibu! Mimi ni Fundi Kito! 😊 Kamera 30k na AC 70k tu ndo bei kamili!</div>
+<div class="mascot-avatar" onclick="nextMtejaMsg()">👷‍♂️</div>
 </div>
 
-<div class="hero">
-<h1 style="font-size:32px;margin-bottom:8px">Fundi Umeme & Bomba Mbezi</h1>
-<p style="font-size:16px;opacity:0.9">Kamera 30k Bei Kamili | AC 70k Bei Kamili | Vingine Makubaliano</p>
-<p style="margin-top:10px;font-size:13px">⚡ Wiring | 📷 CCTV | ❄️ AC | 🚿 Plumbing | ☀️ Solar | 🚨 Emergency 24/7</p>
+<!-- KATUNI WA MHUDUMU - BOSS MATARI BOT MODAL -->
+<div id="mascotMhudumuModal" class="mascot-mhudumu-modal hidden">
+<div class="mascot-mhudumu-box">
+<div class="mascot-mhudumu-avatar">🤖</div>
+<h2 style="color:#0d47a1">Habari Boss Matari! 👋</h2>
+<p style="color:#666;font-size:13px;margin:4px 0">Mimi ni Boss Matari Bot - Msaidizi wako</p>
+<div id="taarifaMhudumu" style="background:#f5f7fb;padding:14px;border-radius:14px;text-align:left;margin:14px 0;font-size:14px;line-height:1.6"></div>
+<button class="btn btn-blue" onclick="funguaDashboard()">ENDELEA KWENYE DASHBOARD →</button>
+<small style="color:#999">Sauti ya alert + ripoti kamili</small>
+</div>
 </div>
 
 <div id="loginChoice" class="card" style="margin-top:20px;text-align:center">
-<h2>Karibu Matari Co. - Chagua Upande</h2>
-<p style="color:#666;margin:8px 0 16px">Huduma bora Dar es Salaam</p>
-<button class="btn btn-blue" onclick="showPage('mtejaLogin')">👤 INGIA MTEJA</button>
-<button class="btn btn-dark" onclick="showPage('fundiLogin')">🔧 INGIA MHUDUMU (adamu)</button>
+<h2>Karibu Matari Co.</h2><p style="color:#666">Chagua upande - Vikatuni vitakusaidia!</p>
+<button class="btn btn-blue" onclick="showPage('mtejaLogin')">👤 INGIA MTEJA - na Fundi Kito</button>
+<button class="btn btn-dark" onclick="showPage('fundiLogin')">🔧 INGIA MHUDUMU - na Boss Bot (adamu)</button>
 </div>
 
-<div id="mtejaLogin" class="card hidden"><h3>👤 Taarifa Zako</h3><input id="mtejaJina" placeholder="Jina kamili"><input id="mtejaSimu" placeholder="Simu 071..."><button class="btn btn-blue" onclick="ingiaMteja()">ENDELEA KUONA HUDUMA →</button><button class="btn" onclick="showPage('loginChoice')">RUDI</button></div>
+<div id="mtejaLogin" class="card hidden"><h3>👤 Taarifa Zako</h3><input id="mtejaJina" placeholder="Jina kamili"><input id="mtejaSimu" placeholder="Simu 071..."><button class="btn btn-blue" onclick="ingiaMteja()">ENDELEA →</button><button class="btn" onclick="showPage('loginChoice')">RUDI</button></div>
 
 <div id="mtejaHuduma" class="hidden">
-<div class="card" style="text-align:center;background:linear-gradient(135deg,#e3f2fd,#fff)"><h3>Habari <span id="mtejaJinaShow" style="color:#0d47a1"></span> 👋</h3><p>Chagua huduma - Kamera & AC pekee ndo bei kamili</p></div>
+<div class="card" style="text-align:center;background:linear-gradient(135deg,#e3f2fd,#fff)"><h3>Habari <span id="mtejaJinaShow" style="color:#0d47a1"></span>! Fundi Kito anakushauri 👇</h3></div>
 <div class="grid">
-<div class="card"><span class="service-icon">📷</span><h3>Kufunga Kamera CCTV</h3><span class="price-tag price-fixed">30k / Kamera - BEI KAMILI</span><p>CCTV 1-8, DVR, mtandao</p><button class="btn btn-yellow" onclick="chaguaHuduma('Kufunga Kamera','30000',true)">NAHITAJI - 30K</button></div>
-<div class="card" style="border:2px solid #0d47a1"><span class="service-icon">❄️</span><h3>AC - Kufunga & Gesi</h3><span class="price-tag price-fixed">70k / AC - BEI KAMILI</span><p>LG, Samsung, Mika - Gesi, kusafisha</p><button class="btn btn-yellow" onclick="chaguaHuduma('AC','70000',true)">NAHITAJI - 70K</button></div>
-<div class="card"><span class="service-icon">🔌</span><h3>Electrical Installation</h3><span class="price-tag price-makubaliano">Bei: Makubaliano</span><p>Wiring nyumba, LUKU, 3 Phase, Socket</p><button class="btn btn-blue" onclick="chaguaHuduma('Electrical Installation','0',false)">NAHITAJI HUDUMA</button></div>
-<div class="card"><span class="service-icon">🚿</span><h3>Plumbing - Fundi Bomba</h3><span class="price-tag price-makubaliano">Bei: Makubaliano</span><p>Kuvuja bomba, Pump, Choo, Tank</p><button class="btn btn-blue" onclick="chaguaHuduma('Plumbing','0',false)">NAHITAJI HUDUMA</button></div>
-<div class="card" style="border:2px solid #f9a825;background:linear-gradient(135deg,#fff8e1,#fff)"><span class="service-icon">☀️</span><h3>Solar System - Mpya!</h3><span class="price-tag price-makubaliano">Bei: Makubaliano - Kulingana na Panel</span><p>Solar panel, battery, inverter - Umeme wa jua</p><button class="btn btn-green" onclick="chaguaHuduma('Solar System','0',false)">NAHITAJI SOLAR ☀️</button></div>
-<div class="card" style="border:2px solid #c62828;background:linear-gradient(135deg,#ffebee,#fff)"><span class="service-icon">🚨</span><h3>Emergency 24/7 - Mpya!</h3><span class="price-tag" style="background:#ffebee;color:#c62828">Huduma ya Dharura - Usiku na Mchana</span><p>Short circuit, maji kuvuja usiku - Tunakuja haraka!</p><button class="btn btn-red" onclick="chaguaHuduma('Emergency 24/7','0',false)">🚨 NAHITAJI HARAKA!</button></div>
+<div class="card"><span class="service-icon">📷</span><h3>Kamera CCTV</h3><span class="price-tag price-fixed">30k / Kamera - BEI KAMILI</span><p>Ulinzi wa nyumba</p><button class="btn btn-yellow" onclick="chaguaHuduma('Kamera','30000',true)">NAHITAJI - 30K</button></div>
+<div class="card"><span class="service-icon">❄️</span><h3>AC 70k</h3><span class="price-tag price-fixed">70k / AC - BEI KAMILI</span><p>Kufunga & Gesi</p><button class="btn btn-yellow" onclick="chaguaHuduma('AC','70000',true)">NAHITAJI - 70K</button></div>
+<div class="card"><span class="service-icon">🔌</span><h3>Electrical</h3><span class="price-tag price-makubaliano">Makubaliano</span><p>Wiring, LUKU</p><button class="btn btn-blue" onclick="chaguaHuduma('Electrical','0',false)">NAHITAJI</button></div>
+<div class="card"><span class="service-icon">🚿</span><h3>Plumbing</h3><span class="price-tag price-makubaliano">Makubaliano</span><p>Bomba, Pump</p><button class="btn btn-blue" onclick="chaguaHuduma('Plumbing','0',false)">NAHITAJI</button></div>
+<div class="card"><span class="service-icon">☀️</span><h3>Solar System</h3><span class="price-tag price-makubaliano">Makubaliano</span><p>Umeme wa jua</p><button class="btn btn-green" onclick="chaguaHuduma('Solar','0',false)">NAHITAJI SOLAR ☀️</button></div>
+<div class="card"><span class="service-icon">🚨</span><h3>Emergency 24/7</h3><span class="price-tag" style="background:#ffebee;color:#c62828">Dharura</span><p>Usiku na mchana</p><button class="btn btn-red" onclick="chaguaHuduma('Emergency','0',false)">🚨 HARAKA!</button></div>
 </div>
 </div>
 
-<div id="mtejaMahali" class="card hidden"><h3>📍 Mahali Ulipo</h3><p>Huduma: <b id="hudumaChaguliwaShow"></b> - <span id="beiShow"></span></p><input id="mkoa" placeholder="Mkoa - Dar es Salaam"><input id="wilaya" placeholder="Wilaya - Kinondoni"><input id="kata" placeholder="Kata - Mbezi"><input id="mtaa" placeholder="Mtaa - Mbezi Mwisho karibu na..."><textarea id="maelezo" placeholder="Elezea tatizo..."></textarea><div id="jumlaBeiBox" style="background:#fff8e1;padding:12px;border-radius:12px;margin:8px 0"></div><button class="btn btn-green" onclick="submitOda()">SUBMIT ODA ✅</button></div>
+<div id="mtejaMahali" class="card hidden"><h3>📍 Mahali</h3><p>Huduma: <b id="hudumaChaguliwaShow"></b> - <span id="beiShow"></span></p><input id="mkoa" placeholder="Mkoa"><input id="wilaya" placeholder="Wilaya"><input id="kata" placeholder="Kata"><input id="mtaa" placeholder="Mtaa"><textarea id="maelezo" placeholder="Maelezo"></textarea><div id="jumlaBeiBox" style="background:#fff8e1;padding:12px;border-radius:12px;margin:8px 0"></div><button class="btn btn-green" onclick="submitOda()">SUBMIT ODA ✅</button></div>
 
-<div id="mtejaAsante" class="card hidden" style="text-align:center"><div style="font-size:64px">🎉</div><h2>Asante!</h2><p>Oda yako imepokelewa</p><p>WhatsApp Fundi: <b id="whatsappShow"></b></p><p style="font-size:12px;color:#777;margin-top:8px">Kamera 30k na AC 70k tu ndo bei kamili - nyingine ni makubaliano</p><button class="btn btn-blue" onclick="location.reload()">RUDI MWANZO</button></div>
+<div id="mtejaAsante" class="card hidden" style="text-align:center"><div style="font-size:64px">🎉</div><h2>Asante! Fundi Kito anakushukuru! 🙏</h2><p>WhatsApp: <b id="whatsappShow"></b></p><button class="btn btn-blue" onclick="location.reload()">RUDI</button></div>
 
-<div id="fundiLogin" class="card hidden"><h3>🔐 Mhudumu - Ingia</h3><input type="password" id="passMhudumu" placeholder="Password: adamu"><button class="btn btn-blue" onclick="loginMhudumu()">INGIA</button><button class="btn" onclick="showPage('loginChoice')">RUDI</button><p id="loginError" style="color:red"></p></div>
+<div id="fundiLogin" class="card hidden"><h3>🔐 Mhudumu</h3><input type="password" id="passMhudumu" placeholder="adamu"><button class="btn btn-blue" onclick="loginMhudumu()">INGIA - Boss Bot Atakupa Taarifa</button><button class="btn" onclick="showPage('loginChoice')">RUDI</button><p id="loginError" style="color:red"></p></div>
 
 <div id="mhudumuPage" class="hidden">
-<div id="alertBar" class="topAlert hidden">🚨</div>
-<div class="card"><h2>📊 Dashboard - Matari Co.</h2><p>Oda: <span id="totalOda">0</span> | Mpya: <span id="odaNew" style="color:red;font-weight:bold">0</span> | Mapato (Kamera+AC tu): <span id="totalMapato">0</span> TZS</p><div style="display:flex;gap:8px"><button class="btn btn-blue" onclick="pakuaRipoti()">📥 RIPOTI PDF</button><button class="btn btn-green" onclick="testAlert()">🔔 TEST ALERT</button></div><p style="font-size:12px;color:#666;margin-top:6px">🔔 Alert inalia kila kuna oda mpya haijafanyiwa kazi + sauti + vibration</p></div>
-<div class="card"><h3>📈 Graph</h3><div class="grid"><div><canvas id="chartWateja"></canvas><small style="color:#666">Ongezeko la Wateja</small></div><div><canvas id="chartHuduma"></canvas><small style="color:#666">Huduma Maarufu</small></div></div></div>
-<div class="card"><h3>📋 Oda Zote - Alert kwa zisizofanyiwa kazi</h3><div id="orodhaOda"></div></div>
-<div class="card"><h3>⚙️ Settings</h3><input id="setWhatsapp" placeholder="WhatsApp 071377454"><input id="setLipa" placeholder="Malipo 0673092321"><input type="password" id="setPassOld" placeholder="Password zamani"><input type="password" id="setPassNew" placeholder="Password mpya"><button class="btn btn-green" onclick="saveSettings()">HIFADHI SETTINGS</button></div>
+<div id="alertBar" class="topAlert hidden"></div>
+<div class="card"><h2>📊 Dashboard - Matari Co.</h2><p>Oda: <span id="totalOda">0</span> | Mpya: <span id="odaNew" style="color:red;font-weight:bold">0</span> | Mapato Kamili: <span id="totalMapato">0</span></p><button class="btn btn-blue" onclick="pakuaRipoti()">📥 RIPOTI PDF</button></div>
+<div class="card"><h3>📈 Graph</h3><div class="grid"><div><canvas id="chartWateja"></canvas></div><div><canvas id="chartHuduma"></canvas></div></div></div>
+<div class="card"><h3>📋 Oda Zote</h3><div id="orodhaOda"></div></div>
+<div class="card"><h3>⚙️ Settings</h3><input id="setWhatsapp" placeholder="WhatsApp"><input id="setLipa" placeholder="Malipo"><input type="password" id="setPassOld" placeholder="Pass zamani"><input type="password" id="setPassNew" placeholder="Pass mpya"><button class="btn btn-green" onclick="saveSettings()">HIFADHI</button></div>
 <button class="btn" onclick="showPage('loginChoice')">TOKA</button>
 </div>
 
-<footer style="background:#111;color:white;text-align:center;padding:20px;margin-top:20px"><p>© 2026 Matari Electrical Co. - Mbezi Dar - 071377454 / 0673092321</p><p style="font-size:12px;opacity:0.7">Kamera 30k | AC 70k | Vingine Makubaliano | Solar | Emergency 24/7</p></footer>
-
+<footer style="background:#111;color:white;text-align:center;padding:18px;margin-top:20px"><p>© 2026 Matari Co. - Vikatuni Fundi Kito & Boss Bot</p></footer>
 <audio id="alertSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
 
 <script>
@@ -99,19 +113,57 @@ setTimeout(()=>document.getElementById('loader').style.display='none',1000);
 let orders=JSON.parse(localStorage.getItem('matari_orders')||'[]');
 let settings=JSON.parse(localStorage.getItem('matari_settings')||'{"whatsapp":"071377454","lipa":"0673092321","pass":"adamu"}');
 let currentMteja={},currentHuduma='',currentBei=0,currentFixed=false;
-function showPage(id){document.querySelectorAll('[id$="Login"],[id$="Choice"],[id$="Huduma"],[id$="Mahali"],[id$="Asante"],[id$="Page"]').forEach(e=>e.classList.add('hidden'));const el=document.getElementById(id);el.classList.remove('hidden');el.style.animation='none';el.offsetHeight;el.style.animation='fadeIn 0.5s';if(id==='mhudumuPage'){loadAdmin();startAlertSystem();}}
-function ingiaMteja(){let j=document.getElementById('mtejaJina').value,s=document.getElementById('mtejaSimu').value;if(!j||!s){alert('Jaza jina na simu');return;}currentMteja={jina:j,simu:s};document.getElementById('mtejaJinaShow').innerText=j;showPage('mtejaHuduma');}
-function chaguaHuduma(h,b,fixed){currentHuduma=h;currentBei=parseInt(b);currentFixed=fixed;document.getElementById('hudumaChaguliwaShow').innerText=h;let beiText=fixed?`${b} TZS - BEI KAMILI`:`Makubaliano - Tutajadili`;document.getElementById('beiShow').innerText=beiText;document.getElementById('jumlaBeiBox').innerHTML=fixed?`<b>Jumla ya Kulipa: ${b} TZS (Bei Kamili)</b><br><small>Kamera 30k na AC 70k tu ndo bei kamili</small>`:`<b>Bei: Makubaliano</b><br><small>Tutakupa bei baada ya kuona kazi - Kamera 30k na AC 70k tu ndo bei kamili</small>`;if(navigator.vibrate)navigator.vibrate(80);showPage('mtejaMahali');}
-function submitOda(){let m=document.getElementById('mkoa').value,w=document.getElementById('wilaya').value,k=document.getElementById('kata').value,mt=document.getElementById('mtaa').value;if(!m||!w||!k||!mt){alert('Jaza mkoa wilaya kata mtaa');return;}let oda={id:Date.now(),jina:currentMteja.jina,simu:currentMteja.simu,huduma:currentHuduma,bei:currentBei,fixed:currentFixed,mkoa:m,wilaya:w,kata:k,mtaa:mt,maelezo:document.getElementById('maelezo').value,tarehe:new Date().toLocaleString(),status:'new'};orders.push(oda);localStorage.setItem('matari_orders',JSON.stringify(orders));document.getElementById('whatsappShow').innerText=settings.whatsapp;let msg=`🚨 ODA MPYA MATARI%0AJina:${oda.jina}%0ASimu:${oda.simu}%0AHuduma:${oda.huduma} ${oda.fixed?oda.bei+'TZS KAMILI':'Makubaliano'}%0AMahali:${m},${w},${k},${mt}%0ATarehe:${oda.tarehe}%0A%0AKamera 30k na AC 70k tu bei kamili, vingine makubaliano`;window.open(`https://wa.me/255${settings.whatsapp.substring(1)}?text=${msg}`,'_blank');showPage('mtejaAsante');}
-function loginMhudumu(){let p=document.getElementById('passMhudumu').value;if(p===settings.pass){showPage('mhudumuPage');}else{document.getElementById('loginError').innerText='Si sahihi, ni adamu';}}
-function loadAdmin(){document.getElementById('totalOda').innerText=orders.length;let ne=orders.filter(o=>o.status==='new').length;document.getElementById('odaNew').innerText=ne;document.getElementById('totalMapato').innerText=orders.filter(o=>o.fixed).reduce((s,o)=>s+o.bei,0);document.getElementById('setWhatsapp').value=settings.whatsapp;document.getElementById('setLipa').value=settings.lipa;let html='';orders.slice().reverse().forEach(o=>{html+=`<div class='card' style='border-left:6px solid ${o.status==='new'?'#c62828':'#2e7d32'};${o.status==='new'?'background:#ffebee':''}'><div style='display:flex;justify-content:space-between'><b>${o.jina}</b><span class='badge ${o.status==='new'?'badge-new':'badge-done'}'>${o.status==='new'?'MPYA HAIJAFANYIKA':'IMEFANYIKA'}</span></div>${o.simu} | ${o.huduma} - ${o.fixed?o.bei+' TZS KAMILI':'Makubaliano'}<br>📍 ${o.mkoa}, ${o.wilaya}, ${o.kata}, ${o.mtaa}<br>🕒 ${o.tarehe}<br>📝 ${o.maelezo}<br><div style='display:flex;gap:8px;margin-top:8px'><button class='btn btn-green' onclick='markDone(${o.id})'>✓ Imefanyika</button><a href='https://wa.me/255${o.simu.substring(1)}' target='_blank' style='flex:1'><button class='btn btn-blue'>💬 WhatsApp</button></a></div></div>`;});document.getElementById('orodhaOda').innerHTML=html||'Hakuna oda';if(ne>0){triggerAlert(ne);}drawCharts();}
-function triggerAlert(count){const bar=document.getElementById('alertBar');bar.classList.remove('hidden');bar.innerHTML=`🚨 ALERT! Kuna Oda ${count} Mpya Hazijafanyiwa Kazi! - ${new Date().toLocaleTimeString()} 🚨`;bar.style.animation='shake 0.6s ease';try{document.getElementById('alertSound').play();}catch(e){}if(navigator.vibrate)navigator.vibrate([200,100,200]);if(Notification&&Notification.permission==='granted'){new Notification(`Matari Co. - Oda ${count} Mpya!`,{body:`Kuna oda mpya haijafanyiwa kazi`});}}
-function testAlert(){triggerAlert(orders.filter(o=>o.status==='new').length||1);alert('🔔 Alert test! Sauti + vibration + banner');}
-function startAlertSystem(){if(Notification&&Notification.permission!=='granted'){Notification.requestPermission();}setInterval(()=>{let ne=orders.filter(o=>o.status==='new').length;if(ne>0)triggerAlert(ne);},60000);}
+
+const ujumbeMteja=[
+"Karibu sana! Mimi ni Fundi Kito! 😊 Kamera 30k na AC 70k tu ndo bei kamili, vingine ni makubaliano!",
+"Umechagua vizuri! Usijali bei ya Wiring na Plumbing tutaongea - ni makubaliano tu!",
+"Tip: Kama ni Emergency usiku - bonyeza 🚨 tutakuja haraka! Mimi Fundi Kito niko nawe!",
+"Asante kwa kutuamini! Jaza mkoa wilaya kata mtaa - tutakufikia haraka! 🚀",
+"Solar ni future! ☀️ Makubaliano tu - tutakupimia bure! - Fundi Kito"
+];
+let idxMsg=0;
+function nextMtejaMsg(){idxMsg=(idxMsg+1)%ujumbeMteja.length;document.getElementById('bubbleMteja').innerText=ujumbeMteja[idxMsg];if(navigator.vibrate)navigator.vibrate(50);}
+function showPage(id){document.querySelectorAll('[id$="Login"],[id$="Choice"],[id$="Huduma"],[id$="Mahali"],[id$="Asante"],[id$="Page"]').forEach(e=>e.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');const mascot=document.getElementById('mascotMteja');if(id.includes('mteja')){mascot.classList.remove('hidden');nextMtejaMsg();}else{mascot.classList.add('hidden');}if(id==='mhudumuPage')loadAdmin();}
+function ingiaMteja(){let j=document.getElementById('mtejaJina').value,s=document.getElementById('mtejaSimu').value;if(!j||!s){alert('Jaza jina na simu');return;}currentMteja={jina:j,simu:s};document.getElementById('mtejaJinaShow').innerText=j;showPage('mtejaHuduma');document.getElementById('bubbleMteja').innerText=`Poa ${j}! 😊 Chagua huduma - Kamera 30k na AC 70k tu ndo bei kamili! Mimi Fundi Kito niko hapa!`;}
+function chaguaHuduma(h,b,fixed){currentHuduma=h;currentBei=parseInt(b);currentFixed=fixed;document.getElementById('hudumaChaguliwaShow').innerText=h;document.getElementById('beiShow').innerText=fixed?`${b} TZS KAMILI`:`Makubaliano`;document.getElementById('jumlaBeiBox').innerHTML=fixed?`<b>${b} TZS - Bei Kamili ✅</b><br><small>Fundi Kito: Hii bei ni fixed!</small>`:`<b>Bei: Makubaliano 🤝</b><br><small>Fundi Kito: Tutajadili baada ya kuona kazi!</small>`;document.getElementById('bubbleMteja').innerText=fixed?`Umechagua ${h} - Bei kamili ${b}! Safi sana! 👌 - Fundi Kito`:`Umechagua ${h} - Hii ni makubaliano, tutaongea vizuri! 🤝 - Fundi Kito`;showPage('mtejaMahali');}
+function submitOda(){let m=document.getElementById('mkoa').value,w=document.getElementById('wilaya').value,k=document.getElementById('kata').value,mt=document.getElementById('mtaa').value;if(!m||!w||!k||!mt){alert('Jaza mkoa wilaya kata mtaa');return;}let oda={id:Date.now(),jina:currentMteja.jina,simu:currentMteja.simu,huduma:currentHuduma,bei:currentBei,fixed:currentFixed,mkoa:m,wilaya:w,kata:k,mtaa:mt,maelezo:document.getElementById('maelezo').value,tarehe:new Date().toLocaleString(),status:'new'};orders.push(oda);localStorage.setItem('matari_orders',JSON.stringify(orders));document.getElementById('whatsappShow').innerText=settings.whatsapp;let msg=`ODA MPYA MATARI%0AJina:${oda.jina}%0ASimu:${oda.simu}%0AHuduma:${oda.huduma} ${oda.fixed?oda.bei+' KAMILI':'Makubaliano'}%0AMahali:${m},${w},${k},${mt}`;window.open(`https://wa.me/255${settings.whatsapp.substring(1)}?text=${msg}`,'_blank');showPage('mtejaAsante');document.getElementById('mascotMteja').classList.add('hidden');}
+
+// MHUDUMU NA KATUNI WAKE
+function loginMhudumu(){
+let p=document.getElementById('passMhudumu').value;
+if(p!==settings.pass){document.getElementById('loginError').innerText='Si sahihi, ni adamu';return;}
+// TENGENZA RIPOTI YA KATUNI
+let total=orders.length;
+let mpya=orders.filter(o=>o.status==='new').length;
+let mapato=orders.filter(o=>o.fixed).reduce((s,o)=>s+o.bei,0);
+let counts={};orders.forEach(o=>{counts[o.huduma]=(counts[o.huduma]||0)+1});
+let maarufu=Object.keys(counts).length?Object.keys(counts).reduce((a,b)=>counts[a]>counts[b]?a:b):'Hakuna bado';
+let taarifaHTML=`
+<b>📊 RIPOTI YA LEO:</b><br>
+• Oda zote: <b>${total}</b><br>
+• Mpya hazijafanyiwa kazi: <b style="color:red">${mpya} 🚨</b><br>
+• Mapato (Kamera 30k + AC 70k): <b>${mapato} TZS</b><br>
+• Huduma maarufu: <b>${maarufu}</b><br>
+• Vingine ni Makubaliano<br><br>
+<span style="background:#fff3e0;padding:6px 10px;border-radius:10px;font-size:12px">💡 Boss, kumbuka Kamera 30k na AC 70k tu ndo bei kamili!</span>
+`;
+document.getElementById('taarifaMhudumu').innerHTML=taarifaHTML;
+document.getElementById('mascotMhudumuModal').classList.remove('hidden');
+try{document.getElementById('alertSound').play();}catch(e){}
+if(navigator.vibrate)navigator.vibrate([200,100,200,100,200]);
+}
+function funguaDashboard(){
+document.getElementById('mascotMhudumuModal').classList.add('hidden');
+document.querySelectorAll('[id$="Login"],[id$="Choice"]').forEach(e=>e.classList.add('hidden'));
+document.getElementById('mhudumuPage').classList.remove('hidden');
+document.getElementById('mascotMteja').classList.add('hidden');
+loadAdmin();
+}
+function loadAdmin(){document.getElementById('totalOda').innerText=orders.length;let ne=orders.filter(o=>o.status==='new').length;document.getElementById('odaNew').innerText=ne;document.getElementById('totalMapato').innerText=orders.filter(o=>o.fixed).reduce((s,o)=>s+o.bei,0);document.getElementById('setWhatsapp').value=settings.whatsapp;document.getElementById('setLipa').value=settings.lipa;let html='';orders.slice().reverse().forEach(o=>{html+=`<div class='card' style='border-left:6px solid ${o.status==='new'?'#c62828':'#2e7d32'}'><b>${o.jina}</b> - ${o.simu} <span class='badge ${o.status==='new'?'badge-new':'badge-done'}'>${o.status==='new'?'MPYA':'IMEFANYIKA'}</span><br>${o.huduma} - ${o.fixed?o.bei+' KAMILI':'Makubaliano'}<br>📍 ${o.mkoa},${o.wilaya},${o.kata},${o.mtaa}<br>🕒 ${o.tarehe}<br><button class='btn btn-green' onclick='markDone(${o.id})'>✓ Imefanyika</button> <a href='https://wa.me/255${o.simu.substring(1)}' target='_blank'><button class='btn btn-blue'>WhatsApp</button></a></div>`;});document.getElementById('orodhaOda').innerHTML=html||'Hakuna oda';if(ne>0){document.getElementById('alertBar').classList.remove('hidden');document.getElementById('alertBar').innerText=`🚨 ALERT! Oda ${ne} Mpya! - Boss Bot anakujulisha!`;try{document.getElementById('alertSound').play();}catch(e){}}drawCharts();}
 function markDone(id){orders=orders.map(o=>o.id===id?{...o,status:'done'}:o);localStorage.setItem('matari_orders',JSON.stringify(orders));loadAdmin();}
-function drawCharts(){let ctx1=document.getElementById('chartWateja').getContext('2d');let labels=orders.map((_,i)=>`Day ${i+1}`);let data=orders.map((_,i)=>i+1);if(window.chart1)window.chart1.destroy();window.chart1=new Chart(ctx1,{type:'line',data:{labels,datasets:[{label:'Ongezeko Wateja',data,borderColor:'#0d47a1',backgroundColor:'rgba(13,71,161,0.15)',fill:true,tension:0.4}]},options:{animation:{duration:1200}}});let ctx2=document.getElementById('chartHuduma').getContext('2d');let counts={};orders.forEach(o=>{counts[o.huduma]=(counts[o.huduma]||0)+1});if(window.chart2)window.chart2.destroy();window.chart2=new Chart(ctx2,{type:'doughnut',data:{labels:Object.keys(counts),datasets:[{data:Object.values(counts),backgroundColor:['#0d47a1','#f9a825','#2e7d32','#c62828','#26a69a','#7b1fa2']}]},options:{animation:{duration:1800}}});}
-function pakuaRipoti(){const{jsPDF}=window.jspdf;let doc=new jsPDF();doc.text("Matari Electrical Co. - Ripoti Kamili",10,10);doc.text(`WhatsApp ${settings.whatsapp} - Malipo ${settings.lipa}`,10,20);doc.text(`Kamera 30k na AC 70k tu bei kamili - Vingine Makubaliano`,10,30);let y=40;orders.forEach((o,i)=>{doc.text(`${i+1}. ${o.jina} | ${o.simu} | ${o.huduma} | ${o.fixed?o.bei+' KAMILI':'Makubaliano'} | ${o.mkoa} | ${o.tarehe} | ${o.status}`,10,y);y+=8;if(y>280){doc.addPage();y=10;}});doc.save(`Matari_Ripoti_${new Date().toLocaleDateString()}.pdf`);}
-function saveSettings(){let w=document.getElementById('setWhatsapp').value,l=document.getElementById('setLipa').value,oldP=document.getElementById('setPassOld').value,newP=document.getElementById('setPassNew').value;if(oldP&&oldP!==settings.pass){alert('Password zamani si sahihi');return;}if(w)settings.whatsapp=w;if(l)settings.lipa=l;if(newP)settings.pass=newP;localStorage.setItem('matari_settings',JSON.stringify(settings));alert('✅ Imehifadhiwa!');}
+function drawCharts(){let ctx1=document.getElementById('chartWateja').getContext('2d');if(window.chart1)window.chart1.destroy();window.chart1=new Chart(ctx1,{type:'line',data:{labels:orders.map((_,i)=>`Oda ${i+1}`),datasets:[{label:'Wateja',data:orders.map((_,i)=>i+1),borderColor:'#0d47a1',backgroundColor:'rgba(13,71,161,0.15)',fill:true,tension:0.4}]}});let ctx2=document.getElementById('chartHuduma').getContext('2d');let counts={};orders.forEach(o=>{counts[o.huduma]=(counts[o.huduma]||0)+1});if(window.chart2)window.chart2.destroy();window.chart2=new Chart(ctx2,{type:'doughnut',data:{labels:Object.keys(counts),datasets:[{data:Object.values(counts),backgroundColor:['#0d47a1','#f9a825','#2e7d32','#c62828','#26a69a','#7b1fa2']}]}});}
+function pakuaRipoti(){const{jsPDF}=window.jspdf;let doc=new jsPDF();doc.text("Matari Co. - Ripoti - na Boss Bot",10,10);let y=30;orders.forEach((o,i)=>{doc.text(`${i+1}. ${o.jina} | ${o.simu} | ${o.huduma} | ${o.fixed?o.bei+' KAMILI':'Makubaliano'} | ${o.tarehe}`,10,y);y+=8;if(y>280){doc.addPage();y=10;}});doc.save(`Matari_Ripoti.pdf`);}
+function saveSettings(){let w=document.getElementById('setWhatsapp').value,l=document.getElementById('setLipa').value,oldP=document.getElementById('setPassOld').value,newP=document.getElementById('setPassNew').value;if(oldP&&oldP!==settings.pass){alert('Pass si sahihi');return;}if(w)settings.whatsapp=w;if(l)settings.lipa=l;if(newP)settings.pass=newP;localStorage.setItem('matari_settings',JSON.stringify(settings));alert('Imehifadhiwa!');}
 </script>
 </body>
 </html>
